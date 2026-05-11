@@ -24,7 +24,7 @@ export default function DesignListPage() {
               key={p.slug}
               href={`/design/${p.slug}`}
               title={p.title}
-              cover={p.cover}
+              cover={p.cover?.src}
               index={i + 1}
             />
           ))}

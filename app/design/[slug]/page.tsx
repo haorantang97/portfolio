@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { designProjects } from "@/content/design";
+import { designProjects, type DesignImage } from "@/content/design";
 
 export function generateStaticParams() {
   return designProjects.map((p) => ({ slug: p.slug }));
@@ -14,8 +14,8 @@ export default function DesignDetailPage({
   const project = designProjects.find((p) => p.slug === params.slug);
   if (!project) notFound();
 
-  const slots: Array<string | undefined> = [
-    project.cover,
+  const slots: DesignImage[] = [
+    project.cover ?? {},
     ...(project.images ?? []),
   ];
 
@@ -38,14 +38,15 @@ export default function DesignDetailPage({
           {project.title}
         </h1>
 
-        {slots.map((src, i) => (
+        {slots.map((slot, i) => (
           <div
             key={i}
-            className="relative mt-12 aspect-[4/3] w-full overflow-hidden bg-[var(--color-border)]"
+            className="relative mt-12 w-full overflow-hidden bg-[var(--color-border)]"
+            style={{ aspectRatio: slot.aspect ?? "4 / 3" }}
           >
-            {src ? (
+            {slot.src ? (
               <img
-                src={src}
+                src={slot.src}
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 h-full w-full object-cover"
