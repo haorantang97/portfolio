@@ -6,10 +6,11 @@ export type StudioWork = {
 };
 
 export const studioWorks: StudioWork[] = [
-  { slug: "work-1", title: "Work 01" },
-  { slug: "work-2", title: "Work 02" },
-  { slug: "work-3", title: "Work 03" },
-  { slug: "work-4", title: "Work 04" },
-  { slug: "work-5", title: "Work 05" },
-  { slug: "work-6", title: "Work 06" },
+  { slug: "glass-1", title: "Glass 01", cover: "/studio/glass/1.jpg" },
+  { slug: "glass-2", title: "Glass 02", cover: "/studio/glass/2.jpg" },
+  { slug: "glass-3", title: "Glass 03", cover: "/studio/glass/3.jpg" },
+  { slug: "glass-4", title: "Glass 04", cover: "/studio/glass/4.jpg" },
+  { slug: "glass-5", title: "Glass 05", cover: "/studio/glass/5.jpg" },
+  { slug: "glass-6", title: "Glass 06", cover: "/studio/glass/6.jpg" },
+  { slug: "glass-7", title: "Glass 07", cover: "/studio/glass/7.jpg" },
 ];
