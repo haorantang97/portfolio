@@ -1,44 +1,73 @@
-import { ModuleLink } from "@/components/ModuleLink";
-
-const modules: Array<[label: string, href: string]> = [
-  ["about",    "/about"],
-  ["building", "/building"],
-  ["notes",    "/notes"],
-  ["wearing",  "/wearing"],
-  ["making",   "/making"],
-  ["contact",  "/contact"],
+const links: Array<[label: string, href: string]> = [
+  ["About",    "/about"],
+  ["Building", "/building"],
+  ["Design",   "/design"],
+  ["Studio",   "/studio"],
+  ["Contact",  "/contact"],
 ];
 
 export default function Home() {
   return (
-    <main className="relative h-screen w-screen overflow-hidden bg-[var(--color-bg)]">
+    <main
+      className="relative h-screen w-screen overflow-hidden bg-black font-sans"
+    >
       <img
-        src="/cover.webp"
+        src="/cover-prototype.png"
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 w-full h-full object-contain"
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{
+          transform: "scaleX(-1)",
+          objectPosition: "right bottom",
+        }}
       />
 
-      <div className="relative z-10 h-full mx-auto max-w-[1440px] px-6 py-12 md:px-20 md:py-24 flex flex-col justify-between">
-        <header>
-          <h1 className="text-[24px] md:text-display font-medium text-[var(--color-ink)]">
-            Haoran Tang
-          </h1>
-          <p className="mt-2 text-[12px] md:text-caption italic text-[var(--color-ink-secondary)]">
-            Independent. Between AI products, fashion, and image.
-          </p>
-        </header>
-
-        <nav>
-          <ul className="space-y-0">
-            {modules.map(([label, href]) => (
-              <li key={label}>
-                <ModuleLink href={href}>{label}</ModuleLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <div
+        className="absolute select-none font-sans"
+        style={{
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          fontWeight: 100,
+          fontSize: "40px",
+          lineHeight: "40px",
+          letterSpacing: "0.12em",
+          color: "var(--color-bg)",
+          textAlign: "center",
+          textTransform: "uppercase",
+          whiteSpace: "nowrap",
+          paddingLeft: "0.12em",
+        }}
+      >
+        HAORAN TANG
       </div>
+
+      <nav
+        className="absolute flex items-baseline font-sans"
+        style={{
+          right: "48px",
+          bottom: "48px",
+          gap: "12px",
+          whiteSpace: "nowrap",
+          fontWeight: 200,
+          fontSize: "14px",
+          lineHeight: "14px",
+          letterSpacing: "0.08em",
+          color: "var(--color-ink)",
+        }}
+      >
+        {links.map(([label, href], i) => (
+          <span key={label} className="flex items-baseline" style={{ gap: "12px" }}>
+            {i > 0 && <span aria-hidden="true">—</span>}
+            <a
+              href={href}
+              style={{ color: "var(--color-ink)", textDecoration: "none" }}
+            >
+              {label}
+            </a>
+          </span>
+        ))}
+      </nav>
     </main>
   );
 }

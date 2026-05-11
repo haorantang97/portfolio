@@ -9,6 +9,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         serif: ["var(--font-serif)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "Inter", "system-ui", "sans-serif"],
       },
       fontSize: {
         display:    ["32px", { lineHeight: "1.1", letterSpacing: "-0.015em" }],
