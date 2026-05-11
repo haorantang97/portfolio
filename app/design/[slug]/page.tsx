@@ -1,8 +1,19 @@
 import Link from "next/link";
-import { ProjectTile } from "@/components/ProjectTile";
+import { notFound } from "next/navigation";
 import { designProjects } from "@/content/design";
 
-export default function DesignListPage() {
+export function generateStaticParams() {
+  return designProjects.map((p) => ({ slug: p.slug }));
+}
+
+export default function DesignDetailPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const project = designProjects.find((p) => p.slug === params.slug);
+  if (!project) notFound();
+
   return (
     <main className="min-h-screen bg-[var(--color-bg)] font-sans text-[var(--color-ink)]">
       <header className="flex items-baseline justify-between px-6 pt-8 md:px-20 md:pt-12">
@@ -17,26 +28,21 @@ export default function DesignListPage() {
         </span>
       </header>
 
-      <div className="mx-auto max-w-[1200px] px-6 py-16 md:px-20 md:py-24">
-        <div className="grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-2">
-          {designProjects.map((p, i) => (
-            <ProjectTile
-              key={p.slug}
-              href={`/design/${p.slug}`}
-              title={p.title}
-              cover={p.cover}
-              index={i + 1}
-            />
-          ))}
-        </div>
-      </div>
+      <article className="mx-auto max-w-[720px] px-6 py-16 md:px-20 md:py-24">
+        <h1 className="font-sans text-[48px] font-medium leading-[1.1] tracking-[-0.02em] text-[var(--color-ink)]">
+          {project.title}
+        </h1>
+        <p className="mt-8 text-[14px] text-[var(--color-ink-secondary)]">
+          Content to be added.
+        </p>
+      </article>
 
       <footer className="px-6 pb-12 md:px-20 md:pb-12">
         <Link
-          href="/"
+          href="/design"
           className="text-[13px] italic text-[var(--color-ink-secondary)]"
         >
-          ← back
+          ← back to design
         </Link>
       </footer>
     </main>
