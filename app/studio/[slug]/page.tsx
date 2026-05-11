@@ -29,16 +29,16 @@ export default function StudioDetailPage({
       </header>
 
       <article className="mx-auto max-w-[900px] px-6 py-12 md:px-20 md:py-16">
-        <div className="relative aspect-square w-full overflow-hidden bg-[var(--color-border)]">
-          {work.cover ? (
-            <img
-              src={work.cover}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          ) : null}
-        </div>
+        {work.cover ? (
+          <img
+            src={work.cover}
+            alt=""
+            aria-hidden="true"
+            className="block h-auto w-full"
+          />
+        ) : (
+          <div className="relative aspect-square w-full bg-[var(--color-border)]" />
+        )}
         <h1 className="mt-8 font-sans text-[24px] font-light tracking-[0.05em] text-[var(--color-ink)]">
           {work.title}
         </h1>
