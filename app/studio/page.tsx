@@ -41,6 +41,9 @@ export default function StudioPage() {
                   </span>
                 )}
               </div>
+              <h2 className="mt-3 font-sans text-[13px] font-light tracking-[0.05em] text-[var(--color-ink)]">
+                {w.title}
+              </h2>
             </Link>
           ))}
         </div>
