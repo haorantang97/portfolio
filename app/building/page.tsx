@@ -10,12 +10,6 @@ const STATUS_LABEL: Record<BuildingStatus, string> = {
   running: "Running",
 };
 
-const STATUS_GLYPH: Record<BuildingStatus, string> = {
-  "live-beta": "●",
-  "in-progress": "○",
-  running: "◐",
-};
-
 export default function BuildingPage() {
   return (
     <main className="min-h-screen bg-[var(--color-bg)] font-sans text-[var(--color-ink)]">
@@ -31,67 +25,59 @@ export default function BuildingPage() {
         </span>
       </header>
 
-      <div className="mx-auto max-w-[900px] space-y-24 px-6 py-16 md:px-20 md:py-24">
-        {buildingProjects.map((p) => (
-          <Link
-            key={p.slug}
-            href={`/building/${p.slug}`}
-            className="group block focus-visible:outline-none"
-          >
-            {/* Hero */}
-            <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--color-border)]">
-              {p.cover ? (
-                <img
-                  src={p.cover}
-                  alt=""
-                  aria-hidden="true"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              ) : (
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 flex items-center justify-center font-sans text-[14px] font-light tracking-[0.15em] uppercase text-[var(--color-ink-secondary)] opacity-50"
+      <div className="mx-auto max-w-[1200px] px-6 py-20 md:px-20 md:py-32">
+        <div className="space-y-28 md:ml-auto md:max-w-[760px] md:space-y-40">
+          {buildingProjects.map((p) => (
+            <article key={p.slug}>
+              <div className="grid gap-y-4 md:grid-cols-[7rem_1fr] md:gap-x-12 md:gap-y-0">
+                {/* Meta column */}
+                <div className="font-sans text-[10px] font-medium uppercase tracking-[0.14em] leading-[1.8] text-[var(--color-ink-secondary)] md:text-right">
+                  <p>{STATUS_LABEL[p.status]}</p>
+                  <p className="mt-2">{p.year}</p>
+                  {p.stack.length > 0 ? (
+                    <div className="mt-4 space-y-1">
+                      {p.stack.map((s) => (
+                        <p key={s}>{s}</p>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+
+                {/* Content column */}
+                <Link
+                  href={`/building/${p.slug}`}
+                  className="group block focus-visible:outline-none"
                 >
-                  No cover yet
-                </span>
-              )}
-              <span className="absolute right-4 top-4 inline-flex items-center gap-2 border border-[var(--color-bg)]/40 bg-[var(--color-ink)]/70 px-2.5 py-1 font-sans text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--color-bg)] backdrop-blur-sm">
-                <span aria-hidden="true">{STATUS_GLYPH[p.status]}</span>
-                {STATUS_LABEL[p.status]}
-              </span>
-            </div>
-
-            {/* Body */}
-            <div className="mt-6">
-              <h2 className="font-sans text-[32px] font-light leading-[1.15] tracking-[-0.005em] text-[var(--color-ink)] md:text-[40px]">
-                {p.title}
-              </h2>
-              {p.subtitle ? (
-                <p className="mt-1 font-sans text-[14px] italic text-[var(--color-ink-secondary)]">
-                  {p.subtitle}
-                </p>
-              ) : null}
-              <p className="mt-3 font-sans text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--color-ink-secondary)]">
-                {p.year}
-                {p.stack.length > 0 ? ` · ${p.stack.join(" · ")}` : ""}
-              </p>
-              {p.pitch ? (
-                <p className="mt-5 max-w-[60ch] font-sans text-[15px] leading-[1.65] text-[var(--color-ink)]">
-                  {p.pitch}
-                </p>
-              ) : null}
-
-              <span className="relative mt-6 inline-block font-sans text-[13px] tracking-[0.02em] text-[var(--color-ink)]">
-                View case study →
-                <span
-                  aria-hidden="true"
-                  className="absolute left-0 -bottom-0.5 h-px w-0 transition-[width] duration-200 ease-out group-hover:w-full group-focus-visible:w-full"
-                  style={{ background: "var(--gradient-gold)" }}
-                />
-              </span>
-            </div>
-          </Link>
-        ))}
+                  <h2 className="font-sans text-[36px] font-light leading-[1.05] tracking-[-0.015em] text-[var(--color-ink)] md:text-[56px]">
+                    {p.title}
+                  </h2>
+                  {p.subtitle ? (
+                    <p className="mt-3 font-sans text-[16px] italic text-[var(--color-ink-secondary)]">
+                      {p.subtitle}
+                    </p>
+                  ) : null}
+                  {p.pitch ? (
+                    <p className="mt-8 max-w-[58ch] font-sans text-[15px] leading-[1.7] text-[var(--color-ink)]">
+                      {p.pitch}
+                    </p>
+                  ) : (
+                    <p className="mt-8 font-sans text-[15px] italic text-[var(--color-ink-secondary)]">
+                      Forthcoming.
+                    </p>
+                  )}
+                  <span className="relative mt-10 inline-block font-sans text-[13px] tracking-[0.02em] text-[var(--color-ink)]">
+                    View case study →
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-0 -bottom-0.5 h-px w-0 transition-[width] duration-200 ease-out group-hover:w-full group-focus-visible:w-full"
+                      style={{ background: "var(--gradient-gold)" }}
+                    />
+                  </span>
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
 
       <footer className="px-6 pb-12 md:px-20 md:pb-12">
