@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Source_Serif_4, Inter } from "next/font/google";
+import { BackButton } from "@/components/BackButton";
+import { LocaleSwitch } from "@/components/LocaleSwitch";
 import "./globals.css";
 
 const serif = Source_Serif_4({
@@ -29,7 +31,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <BackButton />
+        <LocaleSwitch />
+      </body>
     </html>
   );
 }

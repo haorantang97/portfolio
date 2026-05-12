@@ -1,12 +1,17 @@
-const links: Array<[label: string, href: string]> = [
-  ["About",    "/about"],
-  ["Building", "/building"],
-  ["Design",   "/design"],
-  ["Studio",   "/studio"],
-  ["Contact",  "/contact"],
+import { t, ui, type L } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale-server";
+
+const links: Array<[label: L, href: string]> = [
+  [ui.navAbout, "/about"],
+  [ui.navBuilding, "/building"],
+  [ui.navDesign, "/design"],
+  [ui.navStudio, "/studio"],
+  [ui.navContact, "/contact"],
 ];
 
 export default function Home() {
+  const locale = getLocale();
+
   return (
     <main
       className="relative h-screen w-screen overflow-hidden bg-black font-sans"
@@ -57,13 +62,13 @@ export default function Home() {
         }}
       >
         {links.map(([label, href], i) => (
-          <span key={label} className="flex items-baseline" style={{ gap: "12px" }}>
+          <span key={href} className="flex items-baseline" style={{ gap: "12px" }}>
             {i > 0 && <span aria-hidden="true">—</span>}
             <a
               href={href}
               style={{ color: "var(--color-ink)", textDecoration: "none" }}
             >
-              {label}
+              {t(label, locale)}
             </a>
           </span>
         ))}

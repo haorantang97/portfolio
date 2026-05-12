@@ -4,7 +4,7 @@
 
 :root {
   /* Backgrounds */
-  --color-bg: #ECE9DD;              /* Cloud Dancer (Pantone 2026) */
+  --color-bg: #FEFEFD;              /* Near-white, matching design deck page bg */
 
   /* Text */
   --color-ink: #1A1814;              /* Primary — warm ink black */
@@ -39,6 +39,11 @@ body {
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-serif), Georgia, serif;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50%     { transform: translateY(-10px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
