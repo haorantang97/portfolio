@@ -4,7 +4,7 @@ import {
   type BuildingProject,
   type BuildingStatus,
 } from "@/content/building";
-import { AppetizeEmbed } from "@/components/AppetizeEmbed";
+import { CarteWebGallery } from "@/components/CarteWebGallery";
 import { DouyinAgentDiagram } from "@/components/DouyinAgentDiagram";
 import { t, tArr, ui, type L, type Locale } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale-server";
@@ -69,14 +69,29 @@ function ProjectBody({
       </p>
 
       {project.pitch ? (
-        <p className="mt-8 font-sans text-[17px] font-light leading-[1.55] text-[var(--color-ink)]">
+        <p
+          className="mt-8 font-sans text-[17px] font-light leading-[1.55] text-[var(--color-ink)] hyphens-auto"
+          style={{ textAlign: "justify" }}
+        >
           {t(project.pitch, locale)}
         </p>
       ) : null}
 
       {/* Primary CTAs */}
-      {project.links?.appStore || project.links?.website ? (
-        <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 font-sans text-[13px]">
+      {project.links?.appStore ||
+      project.links?.website ||
+      project.appetizeKey ? (
+        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 font-sans text-[13px]">
+          {project.appetizeKey ? (
+            <a
+              href={`https://appetize.io/app/${project.appetizeKey}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center border border-[var(--color-ink)] px-6 py-3 font-sans text-[15px] font-light tracking-[0.02em] text-[var(--color-ink)] transition-colors duration-200 ease-out hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)]"
+            >
+              {t(ui.launchDemo, locale)}
+            </a>
+          ) : null}
           {project.links?.appStore ? (
             <a
               href={project.links.appStore}
@@ -107,16 +122,15 @@ function ProjectBody({
               />
             </a>
           ) : null}
-          {project.links?.privacy ? (
-            <a
-              href={project.links.privacy}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[var(--color-ink-secondary)] underline decoration-[var(--color-border)] underline-offset-4"
-            >
-              {t(ui.privacyPolicy, locale)}
-            </a>
-          ) : null}
+        </div>
+      ) : null}
+
+      {/* Carte snap-scroll gallery — sits below the demo CTA */}
+      {project.slug === "carte" &&
+      project.hero &&
+      project.hero.length > 0 ? (
+        <div className="mt-10 md:mt-12">
+          <CarteWebGallery images={project.hero} />
         </div>
       ) : null}
 
@@ -168,7 +182,10 @@ function ProjectBody({
                 {t(section.label, locale)}
               </h3>
               {section.body ? (
-                <div className="mt-4 space-y-4 font-sans text-[15px] font-light leading-[1.7] text-[var(--color-ink)]">
+                <div
+                  className="mt-4 space-y-4 font-sans text-[15px] font-light leading-[1.7] text-[var(--color-ink)] hyphens-auto"
+                  style={{ textAlign: "justify" }}
+                >
                   {t(section.body, locale)
                     .split("\n\n")
                     .map((para, j) => (
@@ -208,7 +225,10 @@ function ProjectBody({
             className="my-14 h-px w-full"
             style={{ background: "var(--gradient-gold)" }}
           />
-          <p className="font-sans text-[15px] font-light italic leading-[1.7] text-[var(--color-ink-secondary)]">
+          <p
+            className="font-sans text-[15px] font-light italic leading-[1.7] text-[var(--color-ink-secondary)] hyphens-auto"
+            style={{ textAlign: "justify" }}
+          >
             {t(project.closer, locale)}
           </p>
         </>
@@ -226,11 +246,11 @@ export default function BuildingDetailPage({
   const project = buildingProjects.find((p) => p.slug === params.slug);
   if (!project) notFound();
 
-  const hasDemo = Boolean(project.appetizeKey);
-
   return (
     <main className="min-h-screen bg-[var(--color-bg)] font-sans text-[var(--color-ink)]">
-      {project.hero && project.hero.length > 0 ? (
+      {/* Top scattered hero — Pronto-style floating row. Carte gets its
+          own snap-scroll gallery rendered inline below the CTAs instead. */}
+      {project.hero && project.hero.length > 0 && project.slug !== "carte" ? (
         <section
           aria-label="Hero gallery"
           className="mt-10 w-full overflow-x-auto overflow-y-hidden py-16 md:mt-14 md:py-24 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -275,28 +295,9 @@ export default function BuildingDetailPage({
         </section>
       ) : null}
 
-      {hasDemo ? (
-        // 2-column: content left, sticky demo right
-        <div className="mx-auto max-w-[1200px] px-6 py-12 md:px-20 md:py-16">
-          <div className="grid grid-cols-1 gap-y-12 md:grid-cols-[1fr_400px] md:items-start md:gap-x-16 md:gap-y-0 lg:gap-x-20">
-            <article className="min-w-0">
-              <ProjectBody project={project} locale={locale} />
-            </article>
-            <aside className="md:sticky md:top-24 md:self-start">
-              <AppetizeEmbed
-                publicKey={project.appetizeKey!}
-                poster={project.cover}
-                locale={locale}
-              />
-            </aside>
-          </div>
-        </div>
-      ) : (
-        // single column for projects without a live demo
-        <article className="mx-auto max-w-[720px] px-6 py-12 md:px-20 md:py-16">
-          <ProjectBody project={project} locale={locale} />
-        </article>
-      )}
+      <article className="mx-auto max-w-[820px] px-6 py-12 md:px-16 md:py-16">
+        <ProjectBody project={project} locale={locale} />
+      </article>
     </main>
   );
 }

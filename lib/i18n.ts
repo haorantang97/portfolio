@@ -31,10 +31,10 @@ export const ui = {
   caseStudyComing: { en: "Case study coming soon.", zh: "案例研究即将发布。" },
   forthcoming: { en: "Forthcoming.", zh: "即将到来。" },
 
-  launchDemo: { en: "▶ Launch live demo", zh: "▶ 启动实时演示" },
+  launchDemo: { en: "▶ Try live demo ↗", zh: "▶ 试用 Demo ↗" },
   demoNote: {
-    en: "Runs in a real iOS simulator. Free tier — please be gentle.",
-    zh: "在真实 iOS 模拟器中运行。免费额度有限——请轻拿轻放。",
+    en: "Runs in a real iOS simulator on Appetize.",
+    zh: "在 Appetize 上的真实 iOS 模拟器中运行。",
   },
 
   navAbout: { en: "About", zh: "关于" },
